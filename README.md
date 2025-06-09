@@ -1,4 +1,4 @@
-# Gestión de Pacientes Veterinaria XYZ
+# Gestión de Pacientes Veterinaria Caribe
 
 ![Inicio](src/assets/Inicio_Se.png)
 
@@ -33,7 +33,7 @@ Este proyecto es una aplicación web para la gestión de pacientes de una veteri
 
 1. **Clona el repositorio:**
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone <https://github.com/elian0826/soft-front.git>
    cd Front-Vue.js
    ```
 2. **Instala las dependencias:**
