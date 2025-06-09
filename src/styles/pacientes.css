@@ -1,12 +1,12 @@
 .pacientes-wrapper {
     min-height: 100vh;
-    background: linear-gradient(to right, #e0f2f7, #f7f9fc); /* Fondo suave */
+    background: linear-gradient(to right, #e0f2f7, #f7f9fc); 
     display: flex;
     flex-direction: column;
 }
 
 .app-header {
-    background-color: #2c3e50; /* Color oscuro similar al login */
+    background-color: #2c3e50; 
     color: white;
     padding: 1rem 2rem;
     display: flex;
@@ -18,28 +18,28 @@
 .header-left {
     display: flex;
     align-items: center;
-    flex-grow: 1; /* Permite que el lado izquierdo ocupe el espacio disponible */
-    min-width: 0; /* Permite que el contenido del logo/título se encoja */
+    flex-grow: 1; 
+    min-width: 0; 
 }
 
 .header-right {
     display: flex;
     align-items: center;
-    flex-shrink: 0; /* Evita que el botón de cerrar sesión se encoja */
+    flex-shrink: 0; 
 }
 
 .app-logo {
-    height: 40px; /* Tamaño del logo */
+    height: 40px; 
     margin-right: 15px;
-    border-radius: 50%; /* Si quieres que sea circular */
-    background-color: white; /* Para que el logo se vea bien si es transparente */
+    border-radius: 50%; 
+    background-color: white; 
     padding: 5px;
 }
 
 .app-title {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #42b983; /* Color de acento */
+    color: #42b983; 
 }
 
 .pacientes-container {
@@ -73,7 +73,7 @@
     flex-wrap: wrap;
 }
 
-/* Estilos de botones generales */
+
 .btn {
     padding: 0.8rem 1.5rem;
     border-radius: 8px;
@@ -114,9 +114,9 @@
     transform: translateY(-2px);
 }
 
-/* Estilos de tabla */
+
 .table-container {
-    overflow-x: auto; /* Allow horizontal scroll on larger screens if needed */
+    overflow-x: auto; 
     margin-bottom: 2rem;
 }
 
@@ -146,10 +146,10 @@
 }
 
 .table tbody tr:hover {
-    background-color: #e6f7ff; /* Fondo más claro al pasar el ratón */
+    background-color: #e6f7ff; 
 }
 
-/* Estilos del modal */
+
 .modal {
     position: fixed;
     top: 0;
@@ -171,6 +171,10 @@
     max-width: 600px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     position: relative;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .modal-header {
@@ -227,19 +231,31 @@
     box-shadow: 0 0 0 3px rgba(66, 185, 131, 0.2);
 }
 
+form {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+}
+
 .modal-footer {
     display: flex;
     justify-content: flex-end;
     gap: 0.8rem;
     margin-top: 2rem;
+    background: white;
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
 }
 
 /* Paginador */
 .pagination-controls-wrapper {
     display: flex;
-    justify-content: flex-end; /* Alinear a la derecha por defecto */
+    justify-content: flex-end; 
     margin-top: 2rem;
-    padding: 0 1rem; /* Pequeño padding horizontal */
+    padding: 0 1rem; 
 }
 
 .pagination-controls {
@@ -286,11 +302,11 @@
 }
 
 .pagination-controls .btn-secondary {
-    background-color: #007bff; /* Color de ejemplo, puedes ajustar */
+    background-color: #007bff; 
     color: white;
 }
 
-/* Numeros de paginas */
+
 .btn-page {
     background-color: #e9ecef;
     color: #2c3e50;
@@ -323,24 +339,24 @@
     color: #888;
 }
 
-/* Responsividad */
+
 @media (max-width: 768px) {
     .app-header {
-        flex-direction: row; /* Asegurar que sea en fila */
-        justify-content: space-between; /* Alinear a los extremos */
-        align-items: center; /* Centrar verticalmente */
+        flex-direction: row; 
+        justify-content: space-between; 
+        align-items: center; 
         padding: 1rem;
-        flex-wrap: nowrap; /* Deshabilitar flex-wrap para este breakpoint */
+        flex-wrap: nowrap; 
     }
 
     .header-left {
-        margin-bottom: 0; /* Eliminar el margen extra de la disposición en columna */
-        flex-grow: 1; /* Permite que el lado izquierdo ocupe el espacio disponible y empuje el botón */
-        min-width: 0; /* Permite que el contenido del logo/título se encoja si es necesario */
+        margin-bottom: 0; 
+        flex-grow: 1; 
+        min-width: 0; 
     }
 
     .header-right {
-        flex-shrink: 0; /* Evita que el botón de cerrar sesión se encoja */
+        flex-shrink: 0; 
     }
 
     .app-title {
@@ -371,7 +387,7 @@
     .table td {
         padding: 0.5rem;
         font-size: 0.85rem;
-        word-break: break-word; /* Asegura que el texto largo se rompa */
+        word-break: break-word; 
     }
 
     .modal-content {
@@ -387,20 +403,20 @@
         font-size: 0.9rem;
     }
 
-    /* Estilos específicos para la columna de acciones en tablet */
-    .table td:nth-of-type(7) { /* Acciones */
+   
+    .table td:nth-of-type(7) { 
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        gap: 0.3rem; /* Reducir un poco el espacio entre botones */
+        gap: 0.3rem; 
         flex-wrap: nowrap;
     }
 
     .table td:nth-of-type(7) .btn {
-        padding: 0.5rem 0.6rem; /* Reducir aún más el padding */
-        font-size: 0.8rem; /* Reducir el tamaño de fuente */
-        flex-shrink: 1; /* Permite que el botón se encoja */
+        padding: 0.5rem 0.6rem; 
+        font-size: 0.8rem; 
+        flex-shrink: 1; 
         margin-bottom: 0;
     }
 }
@@ -435,7 +451,7 @@
 
     .pagination-controls-wrapper {
         margin-top: 1.5rem;
-        justify-content: center; /* Center paginator on small screens */
+        justify-content: center; 
     }
 
     .pagination-controls {
@@ -455,29 +471,29 @@
         font-size: 0.9rem;
     }
 
-    /* Estilos específicos para la tabla en celulares pequeños (modo "tarjeta") */
+   
     .table-container {
-        overflow-x: hidden; /* Ocultar el scroll horizontal en este breakpoint */
+        overflow-x: hidden; 
     }
 
     .table {
-        display: block; /* La tabla se comporta como un bloque */
+        display: block; 
         width: 100%;
-        border-collapse: separate; /* Permite espacio entre filas/tarjetas */
-        border-spacing: 0 10px; /* Espacio vertical entre "tarjetas" */
+        border-collapse: separate; 
+        border-spacing: 0 10px; 
     }
 
     .table thead {
-        display: none; /* Ocultar el encabezado de la tabla */
+        display: none; 
     }
 
     .table tbody, .table tr {
-        display: block; /* tbody y tr se comportan como bloques */
+        display: block; 
         width: 100%;
     }
 
     .table tr {
-        margin-bottom: 15px; /* Espacio entre cada "tarjeta" de paciente */
+        margin-bottom: 15px; 
         border: 1px solid #e9ecef;
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -486,29 +502,29 @@
     }
 
     .table td {
-        display: flex; /* Cambiado de 'block' a 'flex' */
+        display: flex; 
         width: 100%;
         padding: 8px 0;
         border-bottom: none;
         font-size: 0.9rem;
         text-align: left;
         box-sizing: border-box;
-        white-space: nowrap; /* Asegura que el contenido no se rompa */
-        overflow: hidden; /* Oculta el contenido que se desborda */
-        text-overflow: ellipsis; /* Añade puntos suspensivos si el texto se trunca */
-        justify-content: flex-start; /* Alinea contenido a la izquierda */
-        align-items: center; /* Centra verticalmente */
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        justify-content: flex-start; 
+        align-items: center; 
     }
 
     .table td::before {
-        content: attr(data-label) " "; /* Añadimos un espacio después de la etiqueta */
-        display: inline; /* Hacemos que la etiqueta sea en línea */
+        content: attr(data-label) " "; 
+        display: inline; 
         font-weight: bold;
         color: #555;
         text-align: left;
-        margin-bottom: 0; /* Elimina el margen inferior */
-        flex-shrink: 0; /* Evita que la etiqueta se encoja */
-        white-space: pre; /* Preserve white space for content */
+        margin-bottom: 0; 
+        flex-shrink: 0; 
+        white-space: pre; 
     }
 
     .table td:first-child {
@@ -519,12 +535,12 @@
         padding-bottom: 15px;
     }
 
-    /* Asegurar que el span dentro de td ocupe el espacio restante */
+    
     .table td > span {
-        display: inline; /* Hacemos que el valor sea en línea */
-        word-break: normal; /* Asegura un comportamiento consistente con white-space: nowrap */
+        display: inline; 
+        word-break: normal; 
         width: auto;
-        flex-grow: 1; /* Permite que el valor ocupe el espacio restante */
+        flex-grow: 1; 
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -536,11 +552,11 @@
     .table td:nth-of-type(5)::before { content: "Propietario: "; }
     .table td:nth-of-type(6)::before { content: "Teléfono: "; }
 
-    .table td:nth-of-type(7) { /* Acciones */
+    .table td:nth-of-type(7) { 
         display: flex;
-        flex-direction: row; /* Botones en fila */
-        justify-content: center; /* Alinea botones al centro */
-        align-items: center; /* Centra verticalmente los botones */
+        flex-direction: row; 
+        justify-content: center; 
+        align-items: center; 
         gap: 0.5rem;
         padding-top: 15px;
         border-top: 1px solid #eee;
@@ -548,10 +564,8 @@
     }
 
     .table td:nth-of-type(7) .btn {
-        /* Elimina width: 100%; y margin-bottom si estaban forzando el apilamiento */
-        /* Ajusta padding o min-width/height si es necesario para el tamaño */
         min-width: unset;
-        padding: 0.6rem 1rem; /* Puedes ajustar si es necesario */
+        padding: 0.6rem 1rem;
     }
 
     .table td:nth-of-type(7) .btn:last-child {

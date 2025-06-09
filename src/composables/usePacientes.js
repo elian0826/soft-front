@@ -24,9 +24,9 @@ export function usePacientes() {
     });
     const telefono = ref('');
 
-    // Paginación
+
     const currentPage = ref(1);
-    const itemsPerPage = ref(10); // Puedes ajustar esto según tus necesidades
+    const itemsPerPage = ref(6); 
 
     const paginatedPacientes = computed(() => {
         const start = (currentPage.value - 1) * itemsPerPage.value;
@@ -58,7 +58,7 @@ export function usePacientes() {
 
     const displayedPages = computed(() => {
         const pages = [];
-        const maxVisiblePages = 5; // Número máximo de botones de página visibles (ajustable)
+        const maxVisiblePages = 5;
         const half = Math.floor(maxVisiblePages / 2);
 
         let startPage = Math.max(1, currentPage.value - half);
@@ -100,7 +100,6 @@ export function usePacientes() {
                 pacientes.value = response.data;
             }
         } catch (error) {
-            console.error('Error al cargar pacientes:', error);
             alert('Error al cargar los pacientes');
         }
     };
@@ -130,7 +129,6 @@ export function usePacientes() {
                 await cargarPacientes();
                 alert('Paciente eliminado exitosamente');
             } catch (error) {
-                console.error('Error al eliminar paciente:', error);
                 alert('Error al eliminar el paciente');
             }
         }
@@ -148,7 +146,6 @@ export function usePacientes() {
             alert('Paciente guardado exitosamente');
             resetForm();
         } catch (error) {
-            console.error('Error al guardar paciente:', error);
             alert('Error al guardar el paciente');
         }
     };
@@ -165,7 +162,6 @@ export function usePacientes() {
             window.URL.revokeObjectURL(url);
             alert('Pacientes exportados exitosamente');
         } catch (error) {
-            console.error('Error al exportar pacientes:', error);
             alert('Error al exportar los pacientes');
         }
     };
@@ -182,7 +178,6 @@ export function usePacientes() {
                 await cargarPacientes();
                 alert('Pacientes importados exitosamente');
             } catch (error) {
-                console.error('Error al importar pacientes:', error);
                 alert('Error al importar los pacientes');
             }
         }
@@ -245,7 +240,6 @@ export function usePacientes() {
         calcularEdad,
         logout,
         resetForm,
-        // Exportar variables y funciones de paginación
         currentPage,
         itemsPerPage,
         paginatedPacientes,

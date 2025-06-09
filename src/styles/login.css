@@ -1,35 +1,37 @@
 .login-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100vw;
     min-height: 100vh;
-    background: linear-gradient(to right, #42b983, #2c3e50);
-    padding: 1rem;
+    overflow-x: hidden !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(120deg, #43cea2, #185a9d);
 }
 
 .login-container {
     display: flex;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    max-width: 900px; /* Ajustar el tamaño máximo para la combinación de imagen y formulario */
     width: 100%;
+    max-width: 900px;
+    background: #f5f7fa;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    overflow-x: hidden !important;
 }
 
 .login-image {
     flex: 1;
     display: flex;
-    justify-content: center;
     align-items: center;
-    background-color: #f0f2f5;
-    padding: 2rem;
+    justify-content: center;
+    background: #f0f2f5;
+    min-width: 0;
 }
 
-.login-image img {
-    max-width: 100%;
+.login-img {
+    max-width: 80%;
     height: auto;
     display: block;
+    margin: 0 auto;
 }
 
 .login-card {
@@ -70,13 +72,14 @@
     font-size: 1rem;
 }
 
-.form-group input {
-    width: 100%;
-    padding: 0.9rem 1rem;
-    border: 1px solid #ddd;
+.login-form .form-group input {
+    width: 90% !important;
+    margin: 0 auto;
+    padding: 0.8rem 1rem;
     border-radius: 8px;
+    border: 1px solid #ddd;
     font-size: 1rem;
-    transition: all 0.3s ease;
+    display: block;
 }
 
 .form-group input:focus {
@@ -118,16 +121,23 @@
     font-weight: 500;
 }
 
-/* Media Queries para responsividad */
+body {
+    overflow-x: hidden !important;
+}
+
+::-webkit-scrollbar {
+    display: none !important;
+}
+
 @media (max-width: 768px) {
     .login-container {
-        flex-direction: column; /* Apilar la imagen y el formulario en pantallas pequeñas */
+        flex-direction: column; 
         max-width: 450px;
     }
 
     .login-image {
         padding: 1.5rem;
-        display: none; /* Ocultar imagen en pantallas muy pequeñas si es necesario */
+        display: none; 
     }
 
     .login-card {

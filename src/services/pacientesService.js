@@ -12,7 +12,7 @@ const getAuthConfig = () => {
 };
 
 export const pacientesService = {
-    // Obtener todos los pacientes
+
     getAllPacientes: async () => {
         try {
             const response = await axios.get(API_URL, getAuthConfig());
@@ -22,7 +22,7 @@ export const pacientesService = {
         }
     },
 
-    // Obtener un paciente por ID
+
     getPacienteById: async (id) => {
         try {
             const response = await axios.get(`${API_URL}/${id}`, getAuthConfig());
@@ -32,7 +32,7 @@ export const pacientesService = {
         }
     },
 
-    // Crear un nuevo paciente
+
     createPaciente: async (paciente) => {
         try {
             const response = await axios.post(`${API_URL}/registrar`, paciente, getAuthConfig());
@@ -42,7 +42,7 @@ export const pacientesService = {
         }
     },
 
-    // Actualizar un paciente
+
     updatePaciente: async (paciente) => {
         try {
             const response = await axios.put(`${API_URL}/actualizar`, paciente, getAuthConfig());
@@ -52,7 +52,7 @@ export const pacientesService = {
         }
     },
 
-    // Eliminar un paciente
+
     deletePaciente: async (id) => {
         try {
             const response = await axios.delete(`${API_URL}/eliminar/${id}`, getAuthConfig());
@@ -62,7 +62,7 @@ export const pacientesService = {
         }
     },
 
-    // Exportar pacientes a Excel
+
     exportarPacientes: async () => {
         try {
             const response = await axios.get(`${API_URL}/exportar`, {
@@ -75,7 +75,7 @@ export const pacientesService = {
         }
     },
 
-    // Importar pacientes desde Excel
+
     importarPacientes: async (file) => {
         try {
             const formData = new FormData();

@@ -2,7 +2,7 @@
   <div class="login-wrapper">
     <div class="login-container">
       <div class="login-image">
-        <img src="/src/assets/login_img.png" alt="Veterinario con gato">
+        <img :src="loginImg" alt="Veterinario con gato" class="login-img" />
       </div>
       <div class="login-card">
         <div class="login-header">
@@ -56,6 +56,7 @@ import { useRouter } from 'vue-router';
 import { authService } from '../services/authService';
 import '../styles/login.css';
 import { useLogin } from '../composables/useLogin';
+import loginImg from '@/assets/login_img.png';
 
 export default {
   name: 'LoginView',
@@ -67,7 +68,8 @@ export default {
       password,
       error,
       loading,
-      handleLogin
+      handleLogin,
+      loginImg
     };
   }
 };

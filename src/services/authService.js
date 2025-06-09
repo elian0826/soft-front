@@ -2,14 +2,12 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080';
 
-// Configurar axios para manejar errores de red
-axios.defaults.timeout = 5000; // 5 segundos de timeout
-axios.defaults.withCredentials = true; // Importante para CORS con credenciales
+axios.defaults.timeout = 5000; 
+axios.defaults.withCredentials = true; 
 
 export const authService = {
     login: async (username, password) => {
         try {
-            // Configurar las credenciales para la autenticación básica
             const credentials = btoa(`${username}:${password}`);
             
             const response = await axios.get(`${API_URL}/api/pacientes`, {
@@ -20,7 +18,6 @@ export const authService = {
             });
             
             if (response.status === 200) {
-                // Guardar las credenciales en localStorage
                 localStorage.setItem('user', JSON.stringify({
                     username: username,
                     password: password,

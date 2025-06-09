@@ -9,5 +9,14 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+    },
+    include: ['test/**/*.spec.js'],
+    exclude: ['node_modules', 'dist']
   }
 })
