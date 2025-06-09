@@ -13,7 +13,9 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
+    "@vuepic/vue-datepicker": "^11.0.2",
     "axios": "^1.6.2",
+    "sweetalert2": "^11.22.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },

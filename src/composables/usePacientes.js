@@ -2,6 +2,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { pacientesService } from '../services/pacientesService';
 import { authService } from '../services/authService';
+import Swal from 'sweetalert2';
 
 export function usePacientes() {
     const router = useRouter();
@@ -14,7 +15,7 @@ export function usePacientes() {
         nombre_mascota: '',
         especie: '',
         raza: '',
-        fecha_nacimiento: '',
+        fecha_nacimiento: null,
         tipo_identificacion_dueno: '',
         identificacion_dueno: '',
         nombre_dueno: '',
@@ -111,7 +112,7 @@ export function usePacientes() {
             nombre_mascota: paciente.nombre_mascota,
             especie: paciente.especie,
             raza: paciente.raza,
-            fecha_nacimiento: paciente.fecha_nacimiento,
+            fecha_nacimiento: paciente.fecha_nacimiento ? new Date(paciente.fecha_nacimiento) : null,
             tipo_identificacion_dueno: paciente.tipo_identificacion_dueno,
             identificacion_dueno: paciente.identificacion_dueno,
             nombre_dueno: paciente.nombre_dueno,
@@ -123,34 +124,119 @@ export function usePacientes() {
     };
 
     const eliminarPaciente = async (id) => {
-        if (confirm('¿Está seguro de eliminar este paciente?')) {
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción eliminará el paciente.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (result.isConfirmed) {
             try {
                 await pacientesService.deletePaciente(id);
                 await cargarPacientes();
-                alert('Paciente eliminado exitosamente');
+                await Swal.fire('Eliminado', 'Paciente eliminado exitosamente', 'success');
             } catch (error) {
-                alert('Error al eliminar el paciente');
+                await Swal.fire('Error', 'Error al eliminar el paciente', 'error');
             }
         }
     };
 
     const guardarPaciente = async () => {
         try {
+            let fechaFormateada = form.value.fecha_nacimiento;
+            if (fechaFormateada instanceof Date) {
+                const year = fechaFormateada.getFullYear();
+                const month = String(fechaFormateada.getMonth() + 1).padStart(2, '0');
+                const day = String(fechaFormateada.getDate()).padStart(2, '0');
+                fechaFormateada = `${year}-${month}-${day}`;
+            }
+            const payload = { ...form.value, fecha_nacimiento: fechaFormateada };
             if (pacienteSeleccionado.value) {
-                await pacientesService.updatePaciente(form.value);
+                const detalles = `
+Identificación: ${form.value.identificacion_dueno}
+Tipo Identificación: ${form.value.tipo_identificacion_dueno}
+Nombre Mascota: ${form.value.nombre_mascota}
+Especie: ${form.value.especie}
+Raza: ${form.value.raza}
+Fecha Nacimiento: ${fechaFormateada}
+Nombre Dueño: ${form.value.nombre_dueno}
+Ciudad: ${form.value.ciudad}
+Dirección: ${form.value.direccion}
+Teléfono: ${form.value.telefono}
+`;
+                const result = await Swal.fire({
+                    title: '¿Estás seguro?',
+                    html: `<b>¿Deseas actualizar la información de este paciente?</b><br><pre style='text-align:left'>${detalles}</pre>`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Actualizar',
+                    cancelButtonText: 'Cancelar',
+                    focusCancel: true
+                });
+
+                if (!result.isConfirmed) {
+                    return;
+                }
+
+                await pacientesService.updatePaciente(payload);
+                await Swal.fire('Actualizado', 'Paciente actualizado exitosamente', 'success');
             } else {
-                await pacientesService.createPaciente(form.value);
+                const detalles = `
+Identificación: ${form.value.identificacion_dueno}
+Tipo Identificación: ${form.value.tipo_identificacion_dueno}
+Nombre Mascota: ${form.value.nombre_mascota}
+Especie: ${form.value.especie}
+Raza: ${form.value.raza}
+Fecha Nacimiento: ${fechaFormateada}
+Nombre Dueño: ${form.value.nombre_dueno}
+Ciudad: ${form.value.ciudad}
+Dirección: ${form.value.direccion}
+Teléfono: ${form.value.telefono}
+`;
+                const result = await Swal.fire({
+                    title: '¿Estás seguro?',
+                    html: `<b>¿Deseas registrar este paciente?</b><br><pre style='text-align:left'>${detalles}</pre>`,
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Registrar',
+                    cancelButtonText: 'Cancelar',
+                    focusCancel: true
+                });
+                if (!result.isConfirmed) {
+                    return;
+                }
+                const nuevoPaciente = await pacientesService.createPaciente(payload);
+                await Swal.fire('Guardado', 'Paciente guardado exitosamente', 'success');
+                if (nuevoPaciente && nuevoPaciente.id) {
+                    pacientes.value.unshift(nuevoPaciente);
+                } else {
+                    await cargarPacientes();
+                }
             }
             showModal.value = false;
             await cargarPacientes();
-            alert('Paciente guardado exitosamente');
             resetForm();
         } catch (error) {
-            alert('Error al guardar el paciente');
+            await Swal.fire('Error', 'Error al guardar el paciente', 'error');
         }
     };
 
     const exportarPacientes = async () => {
+        const result = await Swal.fire({
+            title: '¿Está seguro?',
+            text: '¿Desea exportar sus datos?',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Exportar',
+            cancelButtonText: 'Cancelar',
+            focusCancel: true
+        });
+        if (!result.isConfirmed) {
+            return;
+        }
         try {
             const blob = await pacientesService.exportarPacientes();
             const url = window.URL.createObjectURL(new Blob([blob]));
@@ -160,13 +246,37 @@ export function usePacientes() {
             document.body.appendChild(link);
             link.click();
             window.URL.revokeObjectURL(url);
-            alert('Pacientes exportados exitosamente');
+            await Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: 'Pacientes exportados exitosamente',
+                timer: 1800,
+                showConfirmButton: false
+            });
         } catch (error) {
-            alert('Error al exportar los pacientes');
+            await Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al exportar los pacientes',
+                timer: 2000,
+                showConfirmButton: false
+            });
         }
     };
 
-    const importarPacientes = () => {
+    const importarPacientes = async () => {
+        const result = await Swal.fire({
+            title: '¿Está seguro?',
+            text: '¿Desea importar datos? Esto puede sobrescribir información existente.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Importar',
+            cancelButtonText: 'Cancelar',
+            focusCancel: true
+        });
+        if (!result.isConfirmed) {
+            return;
+        }
         fileInput.value.click();
     };
 
@@ -176,9 +286,21 @@ export function usePacientes() {
             try {
                 await pacientesService.importarPacientes(file);
                 await cargarPacientes();
-                alert('Pacientes importados exitosamente');
+                await Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: 'Pacientes importados exitosamente',
+                    timer: 1800,
+                    showConfirmButton: false
+                });
             } catch (error) {
-                alert('Error al importar los pacientes');
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al importar los pacientes',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
             }
         }
     };
@@ -204,7 +326,7 @@ export function usePacientes() {
             nombre_mascota: '',
             especie: '',
             raza: '',
-            fecha_nacimiento: '',
+            fecha_nacimiento: null,
             tipo_identificacion_dueno: '',
             identificacion_dueno: '',
             nombre_dueno: '',
@@ -215,13 +337,26 @@ export function usePacientes() {
         pacienteSeleccionado.value = null;
     };
 
-    const logout = () => {
-        authService.logout();
-        router.push('/login');
+    const logout = async () => {
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¿Deseas cerrar esta sesión?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, cerrar sesión',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (result.isConfirmed) {
+            authService.logout();
+            router.push('/login');
+        }
     };
 
     onMounted(() => {
-        cargarPacientes();
+        if (authService.isAuthenticated()) {
+            cargarPacientes();
+        }
     });
 
     return {

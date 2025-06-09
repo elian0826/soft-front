@@ -16,14 +16,16 @@
       <div class="section-header">
         <h1>Gestión de Pacientes</h1>
         <div class="section-actions">
-          <button class="btn btn-primary" @click="showModal = true">
+          <button class="btn btn-nuevo" @click="abrirNuevoPaciente">
             Nuevo Paciente
           </button>
-          <button class="btn btn-secondary" @click="exportarPacientes">
-            Exportar
+          <button class="btn btn-secondary btn-icon" @click="exportarPacientes">
+            <img src="@/assets/exportar.png" alt="Exportar" class="icon-img">
+            <span class="btn-text">Exportar</span>
           </button>
-          <button class="btn btn-secondary" @click="importarPacientes">
-            Importar
+          <button class="btn btn-secondary btn-icon" @click="importarPacientes">
+            <img src="@/assets/importar.jpg" alt="Importar" class="icon-img">
+            <span class="btn-text">Importar</span>
           </button>
         </div>
       </div>
@@ -105,7 +107,7 @@
       <div v-if="showModal" class="modal">
         <div class="modal-content">
           <div class="modal-header">
-            <h2>{{ pacienteSeleccionado ? 'Editar Paciente' : 'Nuevo Paciente' }}</h2>
+            <h2>{{ pacienteSeleccionado ? 'Editar Paciente' : 'Registrar un nuevo paciente' }}</h2>
             <button class="close-button" @click="showModal = false">&times;</button>
           </div>
           <form @submit.prevent="guardarPaciente">
@@ -116,6 +118,7 @@
                 id="nombre_mascota" 
                 v-model="form.nombre_mascota" 
                 required
+                class="form-control"
               >
             </div>
             <div class="form-group">
@@ -125,6 +128,7 @@
                 id="especie" 
                 v-model="form.especie" 
                 required
+                class="form-control"
               >
             </div>
             <div class="form-group">
@@ -134,19 +138,21 @@
                 id="raza" 
                 v-model="form.raza" 
                 required
+                class="form-control"
               >
             </div>
             <div class="form-group">
               <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-              <input 
-                type="date" 
-                id="fecha_nacimiento" 
-                v-model="form.fecha_nacimiento" 
+              <input
+                type="date"
+                id="fecha_nacimiento"
+                v-model="form.fecha_nacimiento"
                 required
-              >
+                class="form-control"
+              />
             </div>
             <div class="form-group">
-              <label for="tipo_identificacion_dueno">Tipo de Identificación Propietario</label>
+              <label for="tipo_identificacion_dueno">T.Identificación Propietario</label>
               <select 
                 id="tipo_identificacion_dueno" 
                 v-model="form.tipo_identificacion_dueno" 
@@ -166,6 +172,7 @@
                 id="identificacion_dueno" 
                 v-model="form.identificacion_dueno" 
                 required
+                class="form-control"
               >
             </div>
             <div class="form-group">
@@ -175,6 +182,7 @@
                 id="nombre_dueno" 
                 v-model="form.nombre_dueno" 
                 required
+                class="form-control"
               >
             </div>
             <div class="form-group">
@@ -184,6 +192,7 @@
                 id="ciudad" 
                 v-model="form.ciudad" 
                 required
+                class="form-control"
               >
             </div>
             <div class="form-group">
@@ -193,6 +202,7 @@
                 id="telefono" 
                 v-model="form.telefono" 
                 required
+                class="form-control"
               >
             </div>
             <div class="form-group">
@@ -202,6 +212,7 @@
                 id="direccion" 
                 v-model="form.direccion" 
                 required
+                class="form-control"
               >
             </div>
             <div class="modal-footer">
@@ -209,7 +220,7 @@
                 Cancelar
               </button>
               <button type="submit" class="btn btn-primary">
-                {{ pacienteSeleccionado ? 'Actualizar' : 'Guardar' }}
+                {{ pacienteSeleccionado ? 'Actualizar' : 'Registrar' }}
               </button>
             </div>
           </form>
@@ -253,6 +264,7 @@ export default {
       handleFileUpload,
       calcularEdad,
       logout,
+      resetForm,
       // Paginación
       currentPage,
       itemsPerPage,
@@ -264,7 +276,11 @@ export default {
       displayedPages
     } = usePacientes();
 
-    // onMounted se maneja dentro del composable ahora.
+    // Función para abrir el modal de nuevo paciente y limpiar el formulario
+    const abrirNuevoPaciente = () => {
+      resetForm();
+      showModal.value = true;
+    };
 
     return {
       pacientes,
@@ -280,6 +296,7 @@ export default {
       handleFileUpload,
       calcularEdad,
       logout,
+      abrirNuevoPaciente,
       // Paginación
       currentPage,
       itemsPerPage,
